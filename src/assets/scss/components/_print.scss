@@ -1,0 +1,44 @@
+.print{
+  width: 100%;
+  height: 100%;
+  &__load-space{
+    border: 2px dashed #1e78fe;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  &__camera-icon{
+    color: #f6f6f6;
+  }
+  &__image-cart{
+    height: 220px;
+    position: relative;
+
+    &:hover{
+      .print__image-cart__delete-button{
+        opacity: 1 !important;
+      }
+    }
+    &__delete-button{
+      transition: opacity 0.1s ease-in-out !important;
+      position: absolute !important;
+      right: 5px;
+      top: 5px;
+      opacity: 0 !important;
+    }
+    &__edit-button{
+      transition: opacity 0.1s ease-in-out !important;
+      right: 5px;
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+  &__image-cart-skeleton>* {
+    visibility: visible !important;
+  }
+}
+
