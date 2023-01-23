@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import LoadPhotoPage from "./components/pages/print/LoadPhotoPage";
 import ConfirmOrderPage from "./components/pages/print/ConfirmOrderPage";
 import {Helmet} from "react-helmet";
+import PortfolioComponent from "./components/pages/portfolio/PortfolioComponent";
 
 function App() {
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<User />}/>
         <Route path="/print" element={<LoadPhotoPage/>}/>
         <Route path="/confirm" element={<ConfirmOrderPage/>}/>
+        <Route path="/portfolio" element={<PortfolioComponent/>}/>
         <Route path="*" element={<MainPage />}/>
         </Routes>
         </Container>

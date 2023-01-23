@@ -20,7 +20,6 @@ import Badge from "@mui/material/Badge";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../api/user";
 
-// const pages = [['Главная', '/'], ['Услуги', '/services'], ['Магазин', '/shop'], ['Печать фотографий', '/print'], ['Портфолио', '/portfolio'], ['Контакты', '/contact']];
 
 const pages = [
     {name: 'Главная', link: '/'},

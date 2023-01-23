@@ -1,28 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import {
     Box,
-    Button, Card, Fab,
-    Grid,
-    IconButton,
-    ImageList,
-    ImageListItem,
-    ImageListItemBar,
-    Stack, Tooltip,
-    Typography
+    Grid
 } from "@mui/material";
-import InfoIcon from '@mui/icons-material/Info';
-import {PhotoCamera} from "@mui/icons-material";
-import Fade from "react-reveal/Fade";
 import {useDispatch, useSelector} from "react-redux";
-import {fileDelete, fileUpload, getFiles} from "../../../api/file";
-import {API_URL} from "../../../api/config";
-import {setFileInitial, setFileInitialProps} from "../../../redux/slices/fileSlice";
+import {getFiles} from "../../../api/file";
 import ModalItem from "./ModalItem";
-import Delete from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import PhotoLoadBlock from "./PhotoLoadBlock";
-import ImageCard from "./ImageCard";
 import ImageListComponent from "./ImageListComponent";
 import OrderTableComponent from "./OrderTableComponent";
 import ConfirmOrderButton from "./buttons/ConfirmOrderButton";
