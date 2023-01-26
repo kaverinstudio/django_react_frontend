@@ -13,20 +13,40 @@ import {
   Typography
 } from "@mui/material";
 import Fade from 'react-reveal/Fade';
+import {RotatingLines} from "react-loader-spinner";
+import {useDispatch, useSelector} from "react-redux";
+import {showLoader} from "../../redux/slices/portfolioSlice";
 
 const MainPage = () => {
   const [blocks, setBlock] = useState([])
-
-  console.log(blocks)
+  const loader = useSelector(state => state.portfolio.isVisible)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     getBlocks()
   }, [])
 
   const getBlocks = async () => {
+    dispatch(showLoader(true))
     const response = await fetch('/api/main/')
-    const data = await response.json()
-    setBlock(data)
+    await response.json().then((data) => {
+      setBlock(data)
+      dispatch(showLoader(false))
+    })
+  }
+
+  if (loader){
+    return (
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%'}}>
+          <RotatingLines
+              strokeColor="grey"
+              strokeWidth="2"
+              animationDuration="0.75"
+              width="50"
+              visible={true}
+          />
+        </Box>
+    )
   }
 
   return (

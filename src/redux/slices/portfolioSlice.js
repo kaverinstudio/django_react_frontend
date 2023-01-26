@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     files: null,
+    category: null,
     isVisible: false,
     errors: null
 }
@@ -15,10 +16,13 @@ export const portfolioSlice = createSlice({
         },
         showLoader: (state, action) => {
           state.isVisible = action.payload
+        },
+        getCategory: (state, action) => {
+            state.category = action.payload
         }
     }
 })
 
-export const { getPortfolioFiles, showLoader } = portfolioSlice.actions
+export const { getPortfolioFiles, showLoader, getCategory } = portfolioSlice.actions
 
 export default portfolioSlice.reducer

@@ -3,10 +3,11 @@ import PortfolioListComponent from "./PortfolioListComponent";
 import PortfolioHeader from "./PortfolioHeader";
 
 const PortfolioComponent = () => {
+
     return (
         <>
-            <PortfolioHeader/>
-         <PortfolioListComponent/>
+            <PortfolioHeader />
+         <PortfolioListComponent />
         </>
     );
 };

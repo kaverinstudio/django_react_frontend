@@ -33,6 +33,7 @@ function App() {
         <Route path="/print" element={<LoadPhotoPage/>}/>
         <Route path="/confirm" element={<ConfirmOrderPage/>}/>
         <Route path="/portfolio" element={<PortfolioComponent/>}/>
+        <Route path="/portfolio/:cat" element={<PortfolioComponent/>}/>
         <Route path="*" element={<MainPage />}/>
         </Routes>
         </Container>

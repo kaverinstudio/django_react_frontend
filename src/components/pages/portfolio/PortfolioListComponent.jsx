@@ -16,7 +16,6 @@ const PortfolioListComponent = () => {
         dispatch(getAllPortfolioFiles())
     },[])
 
-
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
@@ -29,7 +28,6 @@ const PortfolioListComponent = () => {
         setCurrentImage(0);
         setViewerIsOpen(false);
     }
-
 
     if (loader){
         return (
