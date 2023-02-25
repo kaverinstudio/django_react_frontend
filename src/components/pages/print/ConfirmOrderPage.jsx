@@ -182,6 +182,7 @@ const ConfirmOrderPage = () => {
                                                         helperText={errors?.email?.message}
                                                         label={'Ваш Email (по желанию)'}
                                                         name="email"
+                                                        type='email'
                                                         autoComplete="email"
                                                         value={email ? email : ''}
                                                         onChange={handleChangeEmail}
@@ -195,7 +196,7 @@ const ConfirmOrderPage = () => {
                                                         id="phone"
                                                         required
                                                         helperText={errors?.phone?.message}
-                                                        label={'Укажите ваш номер телефона'}
+                                                        label={'Ваш номер телефона'}
                                                         name="phone"
                                                         autoComplete="phone"
                                                         type="tel"

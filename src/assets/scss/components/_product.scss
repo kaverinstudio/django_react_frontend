@@ -1,0 +1,70 @@
+@import "../variables";
+
+.product-card{
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  &__top-block{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  &__bottom-block{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 1em;
+  }
+  &__image-wrapper{
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 220px;
+  }
+  &__image{
+    height: 100%;
+    width: auto;
+  }
+  &__title{
+    text-align: center;
+    padding-top: 1em;
+    color: $blue;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &:hover{
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.product-detail{
+  &__image-wrapper{
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    height: 550px;
+    border: 2px solid $gray-line;
+  }
+  &__image{
+    height: 100%;
+    width: auto;
+  }
+  &__image-list{
+    border: 2px solid $gray-line;
+    border-radius: 5px;
+    background: $gray-line;
+    cursor: pointer;
+  }
+  &__title{
+    color: $blue;
+  }
+}

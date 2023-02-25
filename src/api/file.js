@@ -112,7 +112,6 @@ export const fileUpdate = (format, papier, count, fileId, user) => {
 export const fileDelete = (user, fileId) => {
     return async dispatch => {
         try {
-            
             let config = {headers:{Authorization: `Token ${localStorage.getItem('token')}`}}
             if (!user){
                 config = { withCredentials: true }

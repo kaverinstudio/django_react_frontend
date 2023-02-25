@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     AppBar,
     Avatar,
@@ -19,20 +19,23 @@ import Logo from '../assets/img/logos_google-photos.webp';
 import Badge from "@mui/material/Badge";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../api/user";
+import {getCart, getUserCart} from "../api/products";
+import {cartProductCount} from "../utils/cartProduct";
 
 
 const pages = [
-    {name: 'Главная', link: '/'},
-    {name: 'Услуги', link: '/services'},
-    {name: 'Магазин', link: '/shop'},
-    {name: 'Печать фотографий', link: '/print'},
-    {name: 'Портфолио', link: '/portfolio'},
-    {name: 'Контакты', link: '/contact'}
+    {name: 'Услуги', link: '/services/'},
+    {name: 'Магазин', link: '/products/'},
+    {name: 'Печать фотографий', link: '/print/'},
+    {name: 'Портфолио', link: '/portfolio/'},
+    {name: 'Контакты', link: '/contact/'}
 ];
 
 const Header = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [cartCount, setCartCount] = useState(0)
+    const cart = useSelector(state => state.products.cart)
     const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
 
@@ -56,9 +59,17 @@ const Header = () => {
         dispatch(logout())
     }
 
+    useEffect(() => {
+        setCartCount(cartProductCount(cart))
+    },[cart])
+
+    useEffect(()=>{
+        dispatch(getUserCart())
+    },[])
+
   return (
     <AppBar className='header' position="static" sx={{color:'initial'}}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
             <Link to='/'>
                 <Typography
@@ -146,7 +157,7 @@ const Header = () => {
           </Box>
           <Box sx={{ flexGrow: 0 , m: 2}}>
               <IconButton aria-label="cart">
-                  <Badge badgeContent={0} color="secondary">
+                  <Badge badgeContent={cartCount} color="secondary">
                       <ShoppingCartIcon className='header__cart' />
                   </Badge>
               </IconButton>

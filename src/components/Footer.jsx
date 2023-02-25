@@ -38,7 +38,7 @@ const Footer = () => {
     };
     return (
         <Box className='footer'>
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
             <Toolbar disableGutters>
                 <Link to='/'>
                 <Typography

@@ -4,9 +4,13 @@ import PortfolioHeader from "./PortfolioHeader";
 
 const PortfolioComponent = () => {
 
+    const breadcrumbs = [
+        {name: 'Портфолио', link: ''},
+    ]
+
     return (
         <>
-            <PortfolioHeader />
+        <PortfolioHeader breadcrumbs={breadcrumbs}/>
          <PortfolioListComponent />
         </>
     );

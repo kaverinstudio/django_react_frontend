@@ -12,6 +12,9 @@ import LoadPhotoPage from "./components/pages/print/LoadPhotoPage";
 import ConfirmOrderPage from "./components/pages/print/ConfirmOrderPage";
 import {Helmet} from "react-helmet";
 import PortfolioComponent from "./components/pages/portfolio/PortfolioComponent";
+import ShopMainPage from "./components/pages/shop/ShopMainPage";
+import ProductCategoryList from "./components/pages/shop/ProductCategoryList";
+import ProductDetailPage from "./components/pages/shop/ProductDetailPage";
 
 function App() {
   const dispatch = useDispatch()
@@ -26,14 +29,17 @@ function App() {
         <meta name='description' content='Лучшая фотостудия в городе'/>
       </Helmet>
       <Header />
-        <Container maxWidth="xl" sx={{flex: 'auto'}}>
+        <Container maxWidth="lg" sx={{flex: 'auto'}}>
         <Routes>
         <Route path="/" element={<MainPage />}/>
-        <Route path="/login" element={<User />}/>
-        <Route path="/print" element={<LoadPhotoPage/>}/>
-        <Route path="/confirm" element={<ConfirmOrderPage/>}/>
-        <Route path="/portfolio" element={<PortfolioComponent/>}/>
-        <Route path="/portfolio/:cat" element={<PortfolioComponent/>}/>
+        <Route path="/login/" element={<User />}/>
+        <Route path="/print/" element={<LoadPhotoPage/>}/>
+        <Route path="/confirm/" element={<ConfirmOrderPage/>}/>
+        <Route path="/portfolio/" element={<PortfolioComponent/>}/>
+        <Route path="/portfolio/:cat/" element={<PortfolioComponent/>}/>
+        <Route path="/products/" element={<ShopMainPage/>}/>
+        <Route path="/products/:category/" element={<ShopMainPage/>}/>
+        <Route path="/products/:category/:slug/" element={<ProductDetailPage/>}/>
         <Route path="*" element={<MainPage />}/>
         </Routes>
         </Container>

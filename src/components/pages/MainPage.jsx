@@ -60,11 +60,11 @@ const MainPage = () => {
                 <CardActionArea>
                   <CardMedia
                       component="img"
-                      height="200"
+                      height="250"
                       image={block.image}
                       alt={block.name}
                   />
-                  <CardContent sx={{minHeight: 113}}>
+                  <CardContent sx={{minHeight: 135}}>
                     <Typography gutterBottom variant="h5" component="div">
                       {block.name}
                     </Typography>
