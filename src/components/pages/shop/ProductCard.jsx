@@ -17,7 +17,7 @@ const ProductCard = ({product, photos}) => {
 
     return (
         <Card className='product-card'>
-            <Link to={'/products/' + product.category.category_slug + '/' + product.product_slug + '/'}>
+            <Link to={'/products/' + product.category?.category_slug + '/' + product?.product_slug + '/'}>
             <Box className='product-card__top-block'>
             <Box className='product-card__image-wrapper'>
             <CardMedia
@@ -25,19 +25,19 @@ const ProductCard = ({product, photos}) => {
                 component="img"
                 sx={{ width: '100%' }}
                 image={photos[0]?.photo}
-                alt={product.product_name}
+                alt={product?.product_name}
             />
             </Box>
-            <Rating name="half-rating" precision={0.5} value={product.rating} readOnly sx={{pt: 2}}/>
-            <Typography variant='h6' className='product-card__title'>{product.product_name}</Typography>
+            <Rating name="half-rating" precision={0.5} value={product?.rating} readOnly sx={{pt: 2}}/>
+            <Typography variant='h6' className='product-card__title'>{product?.product_name}</Typography>
             </Box>
             </Link>
             <Box className='product-card__bottom-block'>
             <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <Typography variant='h6' sx={{textAlign: 'center', pt: 2, pb: 2}}>Цена: {product.price} </Typography><CurrencyRubleIcon sx={{fontSize: '1.2rem'}}/>
+                <Typography variant='h6' sx={{textAlign: 'center', pt: 2, pb: 2}}>Цена: {product?.price} </Typography><CurrencyRubleIcon sx={{fontSize: '1.2rem'}}/>
             </Box>
 
-            <Button variant='contained' onClick={()=>addToCartHandler(product.id, user, 1)}
+            <Button variant='contained' onClick={()=>addToCartHandler(product?.id, user, 1)}
                     sx={{ display: 'block', mt: 2 }}
             >
                 Купить

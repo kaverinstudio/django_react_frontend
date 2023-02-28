@@ -4,14 +4,14 @@ import keygen from "keygenerator";
 import {
     addToCart,
     errorProductMessages,
-    getCart,
+    getCart, loadInitialProducts,
     loadPhotos,
     loadProducts,
     showUploader
 } from "../redux/slices/productSlice";
 
 
-export const getProducts = (category='', slug= '') => {
+export const getProducts = (category='', slug= '', minPrice, maxPrice, sort, manufactured, cat) => {
     return async dispatch => {
         let categoryUrl = ''
         let slugUrl = ''
@@ -23,9 +23,20 @@ export const getProducts = (category='', slug= '') => {
         }
         try {
             dispatch(showUploader(true))
-            const response = await axios.get(`${API_URL}api/products/${categoryUrl}${slugUrl}`)
+            const response = await axios.get(`${API_URL}api/products/${categoryUrl}${slugUrl}`, {
+                params: {
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    sort: sort,
+                    manufactured: manufactured,
+                    cat: cat
+                }
+            })
             dispatch(loadProducts(response.data.products))
             dispatch(loadPhotos(response.data.photos))
+            if (!minPrice && !maxPrice){
+                dispatch(loadInitialProducts(response.data.products))
+            }
             dispatch(showUploader(false))
         }catch (e) {
             console.log(e)

@@ -1,41 +1,16 @@
 import React from 'react';
 import {
-    Avatar,
     Box,
-    Button,
     Container,
     Grid,
-    IconButton,
-    Menu,
-    MenuItem,
     Toolbar,
-    Tooltip,
     Typography
 } from "@mui/material";
 import Logo from "../assets/img/logos_google-photos.webp";
-import MenuIcon from "@mui/icons-material/Menu";
-import Badge from "@mui/material/Badge";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {Link} from "react-router-dom";
 
 const Footer = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
     return (
         <Box className='footer'>
         <Container maxWidth="lg">

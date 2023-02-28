@@ -1,17 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
+    initialProducts: null,
+    // fullProducts: null,
     products: null,
     photos: null,
     isVisible: false,
     errors: null,
-    cart: []
+    cart: [],
+    filterManufactured: null,
+    filterCategory: null
 }
 
 export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
+        loadInitialProducts: (state, action) => {
+          state.initialProducts = action.payload
+          // state.fullProducts = action.payload
+        },
         loadProducts: (state, action) => {
             state.products = action.payload
         },
@@ -26,10 +34,16 @@ export const productSlice = createSlice({
         },
         getCart: (state, action) => {
             state.cart = action.payload
+        },
+        filterManufactured: (state, action) => {
+            state.filterManufactured = action.payload
+        },
+        filterCategory: (state, action) => {
+            state.filterCategory = action.payload
         }
     }
 })
 
-export const { showUploader, errorProductMessages, loadProducts, loadPhotos, getCart } = productSlice.actions
+export const { showUploader, errorProductMessages, loadProducts, loadPhotos, getCart, loadInitialProducts, filterManufactured, filterCategory } = productSlice.actions
 
 export default productSlice.reducer

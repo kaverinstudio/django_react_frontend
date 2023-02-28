@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getProducts} from "../../../api/products";
 import ShopHeader from "./ShopHeader";
@@ -8,27 +8,33 @@ import {Grid} from "@mui/material";
 import {useParams} from "react-router-dom";
 
 const ShopMainPage = () => {
-    const category = useSelector(state => state.products.products)
-    const dispatch = useDispatch()
+    const products = useSelector(state => state.products.products)
+    // const dispatch = useDispatch()
     const params = useParams()
 
     let breadcrumbs = [
         {name: 'Каталог', link: '/products/'},
     ]
 
-    if(params.category  && category){
-        breadcrumbs = [...breadcrumbs, {name: category[0].category.category_name, link: `/products/${category[0].category.category_slug}/`}]
+    if(params.category  && products){
+        breadcrumbs = [...breadcrumbs, {name: products[0].category.category_name, link: `/products/${products[0].category.category_slug}/`}]
     }
 
-    useEffect(()=>{
-        dispatch(getProducts(params.category))
-    },[params.category, dispatch])
+    const [sort, setSort] = useState('rating')
+
+    const sortSelect = (event) => {
+        setSort(event)
+    }
+
+    // useEffect(()=>{
+    //     dispatch(getProducts(params.category))
+    // },[params.category, dispatch])
     return (
         <>
-            <ShopHeader breadcrumbs={breadcrumbs}/>
+            <ShopHeader sortSelect={sortSelect} breadcrumbs={breadcrumbs}/>
             <Grid container spacing={1}>
                 <Grid item sm={2}>
-                    <ShopSideBar/>
+                    <ShopSideBar sort={sort}/>
                 </Grid>
                 <Grid item sm={10}>
                     <ProductList/>

@@ -13,7 +13,6 @@ import ConfirmOrderPage from "./components/pages/print/ConfirmOrderPage";
 import {Helmet} from "react-helmet";
 import PortfolioComponent from "./components/pages/portfolio/PortfolioComponent";
 import ShopMainPage from "./components/pages/shop/ShopMainPage";
-import ProductCategoryList from "./components/pages/shop/ProductCategoryList";
 import ProductDetailPage from "./components/pages/shop/ProductDetailPage";
 
 function App() {

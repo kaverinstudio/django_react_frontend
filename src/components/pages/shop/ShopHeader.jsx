@@ -1,16 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Button, FormControl, Grid, MenuItem, Select, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllPortfolioFiles} from "../../../api/portfolio";
 import BreadcrumbsComponent from "../../BreadcrumbsComponent";
+import {getProducts} from "../../../api/products";
+import {useParams} from "react-router-dom";
+import {getPrices} from "../../../utils/cartProduct";
 
 
-const ShopHeader = ({breadcrumbs}) => {
+const ShopHeader = ({breadcrumbs, sortSelect}) => {
+    const products = useSelector(state => state.products.initialProducts)
+    const filterMass = useSelector(state => state.products)
+    const params = useParams()
+
+    let minPrice = 0
+    let maxPrice = 0
+    if (products){
+        minPrice = getPrices(products, minPrice, maxPrice)[0]
+        maxPrice = getPrices(products, minPrice, maxPrice)[1]
+    }
+    const [value, setValue] = useState([minPrice, maxPrice]);
+
+    useEffect(()=>{
+        setValue([minPrice, maxPrice])
+    },[minPrice, maxPrice])
+
     const category = [
-        {id: 0, category: 'популярные'},
-        {id: 1, category: 'новинки'},
-        {id: 2, category: 'дешевле'},
-        {id: 3, category: 'дороже'},
+        {id: 0, category: 'популярные', sort: 'rating'},
+        {id: 1, category: 'новинки', sort: 'create_at'},
+        {id: 2, category: 'дешевле', sort: 'price'},
+        {id: 3, category: 'дороже', sort: '-price'},
     ]
 
     const [select, setSelect] = useState(0)
@@ -19,7 +38,10 @@ const ShopHeader = ({breadcrumbs}) => {
 
     const selectCategorySelect = (event) => {
         setSelect(event.target.value)
-        dispatch(getAllPortfolioFiles(event.target.value === 0 ? '' : event.target.value))
+        dispatch(getProducts(params.category, '', value[0], value[1], category[event.target.value].sort,
+            filterMass.filterManufactured ? filterMass.filterManufactured.join() : '',
+            filterMass.filterCategory ? filterMass.filterCategory.join() : ''))
+        sortSelect(category[event.target.value].sort)
     }
 
     return (
