@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {ccyFormat, orderTableInit, priceRow, subtotal} from "../../../utils/orderTable";
+import {useDispatch} from "react-redux";
+import {ccyFormat, priceRow, setProductOrder, shopSubtotal} from "../../../utils/orderTable";
 import {setOrder} from "../../../redux/slices/fileSlice";
 
 
-const OrderTableComponent = ({filesInitial, orderButton}) => {
-    const initialProps = useSelector(state => state.files.fileInitialProps)
+const OrderShopTableComponent = ({cartInitial, orderButton}) => {
     const [rows, setRows] = useState(null)
     const dispatch = useDispatch()
 
-    const invoiceSubtotal = subtotal(rows);
+    const invoiceSubtotal = shopSubtotal(rows);
 
     const TAX_RATE = 0.07;
 
@@ -18,9 +17,9 @@ const OrderTableComponent = ({filesInitial, orderButton}) => {
     const invoiceTotal = invoiceSubtotal - invoiceTaxes;
 
     useEffect(() =>{
-        setRows(orderTableInit(filesInitial, initialProps))
-        dispatch(setOrder(orderTableInit(filesInitial, initialProps)))
-    },[filesInitial])
+        setRows(cartInitial)
+        dispatch(setOrder(setProductOrder(cartInitial)))
+    },[cartInitial])
 
     return (
         <TableContainer component={Paper}>
@@ -32,7 +31,7 @@ const OrderTableComponent = ({filesInitial, orderButton}) => {
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>Фотография</TableCell>
+                        <TableCell>Товар</TableCell>
                         <TableCell align="right">Количество</TableCell>
                         <TableCell align="right">Стоимость</TableCell>
                         <TableCell align="right">Цена</TableCell>
@@ -41,17 +40,17 @@ const OrderTableComponent = ({filesInitial, orderButton}) => {
                 <TableBody>
                     {rows?.map((row) =>
                         <TableRow key={row.id}>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell align="right">{row.count}</TableCell>
-                            <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-                            <TableCell align="right">{ccyFormat(priceRow(row.count, row.price))}</TableCell>
+                            <TableCell>{row.product.product_name}</TableCell>
+                            <TableCell align="right">{row.product_count}</TableCell>
+                            <TableCell align="right">{ccyFormat(row.product.price)}</TableCell>
+                            <TableCell align="right">{ccyFormat(priceRow(row.product_count, row.product.price))}</TableCell>
                         </TableRow>
 
                     )}
 
                     <TableRow>
                         <TableCell align='center' rowSpan={3} >
-                                {orderButton}
+                            {orderButton}
                         </TableCell>
                         <TableCell colSpan={2}>Сумма</TableCell>
                         <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
@@ -71,4 +70,4 @@ const OrderTableComponent = ({filesInitial, orderButton}) => {
     );
 };
 
-export default OrderTableComponent;
+export default OrderShopTableComponent;

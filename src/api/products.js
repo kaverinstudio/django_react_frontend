@@ -2,13 +2,13 @@ import axios from "axios";
 import { API_URL } from './config'
 import keygen from "keygenerator";
 import {
-    addToCart,
     errorProductMessages,
     getCart, loadInitialProducts,
     loadPhotos,
     loadProducts,
-    showUploader
 } from "../redux/slices/productSlice";
+import {errorFileMessages, hideUploader, setConfirmOrder, showUploader} from "../redux/slices/fileSlice";
+import {errorMessages} from "../redux/slices/authSlice";
 
 
 export const getProducts = (category='', slug= '', minPrice, maxPrice, sort, manufactured, cat) => {
@@ -22,7 +22,7 @@ export const getProducts = (category='', slug= '', minPrice, maxPrice, sort, man
             slugUrl = `${slug}/`
         }
         try {
-            dispatch(showUploader(true))
+            dispatch(showUploader())
             const response = await axios.get(`${API_URL}api/products/${categoryUrl}${slugUrl}`, {
                 params: {
                     minPrice: minPrice,
@@ -37,7 +37,7 @@ export const getProducts = (category='', slug= '', minPrice, maxPrice, sort, man
             if (!minPrice && !maxPrice){
                 dispatch(loadInitialProducts(response.data.products))
             }
-            dispatch(showUploader(false))
+            dispatch(hideUploader())
         }catch (e) {
             console.log(e)
         }
@@ -65,7 +65,7 @@ export const addProductToCart = (product, user, count) => {
                 count,
                 session_key
             }, config)
-            dispatch(getCart(response.data.product))
+            dispatch(getCart(response.data))
         }catch (e) {
             dispatch(errorProductMessages(e))
         }
@@ -76,9 +76,84 @@ export const getUserCart = () => {
   return async dispatch => {
       try {
           const response = await axios.get(`${API_URL}api/cart/`)
-          dispatch(getCart(response.data.product))
+          dispatch(getCart(response.data))
       }catch (e) {
           console.log(e)
       }
   }
+}
+
+export const updateUserCart = (user, id, count) => {
+    return async dispatch => {
+        try {
+            let config = {headers:{Authorization: `Token ${localStorage.getItem('token')}`}}
+            if (!user){
+                config = { withCredentials: true }
+            }
+            const response = await axios.put(`${API_URL}api/cart/update/${id}`,{count}, config)
+            dispatch(getCart(response.data))
+        }catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteUserCart = (user, id) => {
+    return async dispatch => {
+        try {
+            let config = {headers:{Authorization: `Token ${localStorage.getItem('token')}`}}
+            if (!user){
+                config = { withCredentials: true }
+            }
+            const response = await axios.delete(`${API_URL}api/cart/delete/${id}`, config)
+            dispatch(getCart(response.data))
+        }catch (e){
+            console.log(e)
+        }
+    }
+}
+
+export const deleteAllProductInCart = (user) => {
+    return async dispatch => {
+        try {
+            let config = {headers:{Authorization: `Token ${localStorage.getItem('token')}`}}
+            if (!user){
+                config = { withCredentials: true }
+            }
+            const response = await axios.delete(`${API_URL}api/cart/delete/`, config)
+            dispatch(getCart(response.data))
+        }catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const shopConfirmOrder = (user, first_name, last_name, phone, email, address, comments, delivery, order) => {
+    return async dispatch => {
+        try {
+            dispatch(showUploader())
+            let config = {headers:{Authorization: `Token ${localStorage.getItem('token')}`}}
+            if (!user){
+                config = { withCredentials: true }
+            }
+            const response = await axios.post(`${API_URL}api/cart/confirm`, {
+                first_name,
+                last_name,
+                phone,
+                email,
+                address,
+                comments,
+                delivery,
+                order
+            }, config)
+            dispatch(setConfirmOrder(response.data.order))
+            dispatch(getCart(null))
+            dispatch(errorFileMessages('ok'))
+            dispatch(hideUploader())
+        }catch (e) {
+            dispatch(errorMessages(e.response.data))
+            dispatch(hideUploader())
+        }
+    }
+  
 }

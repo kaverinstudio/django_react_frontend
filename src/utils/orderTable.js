@@ -26,7 +26,7 @@ export const orderTableInit = (filesInitial, initialProps) => {
 }
 
 export function ccyFormat(num) {
-    return `${num?.toFixed(2)}`;
+    return `${parseInt(num)?.toFixed(2)}`;
 }
 
 export function priceRow(qty, unit) {
@@ -35,4 +35,14 @@ export function priceRow(qty, unit) {
 
 export function subtotal(items) {
     return items?.map(({ price, count }) => priceRow(price, count)).reduce((sum, i) => sum + i, 0);
+}
+
+export function shopSubtotal(items){
+    return items?.map(item => priceRow(item.product.price, item.product_count)).reduce((sum, i) => sum + i, 0)
+}
+
+export function setProductOrder(cart) {
+    const orderMass = []
+    cart?.map(product => orderMass.push({'id': product.id, 'name': product.product.product_name, 'count': product.product_count, 'price': parseInt(product. product.price)}))
+    return orderMass
 }

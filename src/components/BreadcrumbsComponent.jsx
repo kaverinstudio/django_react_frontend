@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
-import {Breadcrumbs, Typography} from "@mui/material";
+import { Breadcrumbs, Typography } from "@mui/material";
 
-const BreadcrumbsComponent = ({breadcrumbs}) => {
+const BreadcrumbsComponent = ({ breadcrumbs }) => {
     return (
         <Breadcrumbs aria-label="breadcrumb" className='breadcrumb'>
             <Link

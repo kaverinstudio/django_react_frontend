@@ -7,7 +7,7 @@ const initialState = {
     photos: null,
     isVisible: false,
     errors: null,
-    cart: [],
+    cart: null,
     filterManufactured: null,
     filterCategory: null
 }

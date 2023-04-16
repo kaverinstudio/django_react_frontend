@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Box, Card, CardMedia, Typography, Rating, Button} from "@mui/material";
 import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
 import {Link} from "react-router-dom";
@@ -34,7 +34,7 @@ const ProductCard = ({product, photos}) => {
             </Link>
             <Box className='product-card__bottom-block'>
             <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <Typography variant='h6' sx={{textAlign: 'center', pt: 2, pb: 2}}>Цена: {product?.price} </Typography><CurrencyRubleIcon sx={{fontSize: '1.2rem'}}/>
+                <Typography variant='h6' sx={{textAlign: 'center', pt: 2, pb: 2}}>Цена: {parseInt(product?.price).toLocaleString('ru-RU')} </Typography><CurrencyRubleIcon sx={{fontSize: '1.1rem'}}/>
             </Box>
 
             <Button variant='contained' onClick={()=>addToCartHandler(product?.id, user, 1)}

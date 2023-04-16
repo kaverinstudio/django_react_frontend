@@ -47,6 +47,9 @@
 }
 
 .product-detail{
+  &__image-block{
+    padding-left: 0;
+  }
   &__image-wrapper{
     border-radius: 10px;
     overflow: hidden;

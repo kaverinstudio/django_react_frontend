@@ -8,7 +8,7 @@ import {clearMessages, userLogout} from "../redux/slices/authSlice";
 import {RotatingLines} from "react-loader-spinner";
 import {errorFileMessages} from "../redux/slices/fileSlice";
 
-const Alert = ({status, message, icon, relink, logout}) => {
+const Alert = ({status, message, icon, relink, logout, link}) => {
     const [open, setOpen] = useState(null)
     const MySwal = withReactContent(Swal);
     const dispatch = useDispatch()
@@ -71,7 +71,7 @@ const Alert = ({status, message, icon, relink, logout}) => {
 
         }).then((result) => {
             if (result.isConfirmed && relink){
-                navigate('/print')
+                navigate(link)
                 dispatch(errorFileMessages(''))
                 dispatch(clearMessages())
                 setOpen(null)

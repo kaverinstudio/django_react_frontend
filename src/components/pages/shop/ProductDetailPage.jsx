@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {addProductToCart, getProduct, getProducts} from "../../../api/products";
+import {addProductToCart} from "../../../api/products";
 import {useDispatch, useSelector} from "react-redux";
 import ShopHeader from "./ShopHeader";
 import {
@@ -15,8 +15,6 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import ShopSideBar from "./ShopSideBar";
-import ProductList from "./ProductList";
 import axios from "axios";
 import {API_URL} from "../../../api/config";
 import {RotatingLines} from "react-loader-spinner";
@@ -131,7 +129,7 @@ const ProductDetailPage = () => {
                     </Grid>
                     <Divider/>
                     <Box sx={{display: 'flex', alignItems: 'center'}}>
-                        <Typography variant='h6' sx={{textAlign: 'center', pt: 2, pb: 2}}>Цена: {product.products.price} </Typography><CurrencyRubleIcon sx={{fontSize: '1.2rem'}}/>
+                        <Typography variant='h6' sx={{textAlign: 'center', pt: 2, pb: 2}}>Цена: {parseInt(product.products.price).toLocaleString('ru-RU')} </Typography><CurrencyRubleIcon sx={{fontSize: '1.1rem'}}/>
                     </Box>
                     <Box>
                         <Typography variant='body1'>{product.products.description}</Typography>

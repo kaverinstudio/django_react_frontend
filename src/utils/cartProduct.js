@@ -11,3 +11,9 @@ export const getPrices = (initialProducts, minPrice, maxPrice) => {
     maxPrice = Number(maxPriceProduct.price)
     return [minPrice, maxPrice]
 }
+
+export const totalCartSum = (userCart) => {
+  let total = 0
+    total = userCart?.reduce((acc, el) => acc + (el.product_count * el.product.price), total)
+    return total
+}

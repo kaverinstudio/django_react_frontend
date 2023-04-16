@@ -9,13 +9,12 @@ import ModalItem from "./ModalItem";
 import PhotoLoadBlock from "./PhotoLoadBlock";
 import ImageListComponent from "./ImageListComponent";
 import OrderTableComponent from "./OrderTableComponent";
-import ConfirmOrderButton from "./buttons/ConfirmOrderButton";
+import ConfirmOrderButton from "../../buttons/ConfirmOrderButton";
 
 
 const LoadPhotoPage = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
-    const files = useSelector(state => state.files.files)
     const filesInitial = useSelector(state => state.files.fileInitial)
 
     useEffect(()=>{
