@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Popover, Tooltip} from "@mui/material";
+import {Tooltip} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,12 +10,8 @@ import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {clearMessages, userError} from "../../../redux/slices/authSlice";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -63,12 +59,6 @@ const DashBoard = () => {
     }
 
 
-    // const [password, setPassword] = useState('')
-    // const handleChangePassword = (e) => setPassword(e.currentTarget.value)
-    //
-    // const [password2, setPassword2] = useState('')
-    // const handleChangePassword2 = (e) => setPassword2(e.currentTarget.value)
-
     const [errorsMessage, setErrorsMessage] = useState('');
 
 
@@ -88,13 +78,6 @@ const DashBoard = () => {
         last_name: yup.string().min(testLastName, 'Количество символов не может быть меньше 2').max(60, 'Количество символов не может быть больше 60'),
         city: yup.string().min(testCity, 'Количество символов не может быть меньше 10').max(100, 'Количество символов не может быть больше 100')
     })
-
-
-
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    //     dispatch(clearMessages())
-    // };
 
     const {
         register,
@@ -155,29 +138,8 @@ const DashBoard = () => {
         dispatch(uploadAvatar(file))
     }
 
-    // const open = Boolean(anchorEl);
-    // const id = open ? 'simple-popover' : undefined;
     return (
         <ThemeProvider theme={theme}>
-            {/*<Popover*/}
-            {/*    id={id}*/}
-            {/*    open={open}*/}
-            {/*    anchorEl={anchorEl}*/}
-            {/*    onClose={handleClose}*/}
-            {/*    anchorOrigin={{*/}
-            {/*        vertical: 'center',*/}
-            {/*        horizontal: 'center',*/}
-            {/*    }}*/}
-            {/*    transformOrigin={{*/}
-            {/*        vertical: 'center',*/}
-            {/*        horizontal: 'center',*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    {successMessage ? <Typography sx={{ p: 2, textAlign: 'center', color: 'green' }}>{successMessage}</Typography> : ''}*/}
-            {/*    {loginErrors?.username ? <Typography sx={{ p: 2, textAlign: 'center', color: 'red' }}>{loginErrors?.username}</Typography> : ''}*/}
-            {/*    {loginErrors?.email ? <Typography sx={{ p: 2, textAlign: 'center', color: 'red' }}>{loginErrors?.email}</Typography> : ''}*/}
-            {/*    {loginErrors?.password ? <Typography sx={{ p: 2, textAlign: 'center', color: 'red' }}>{loginErrors?.password}</Typography> : ''}*/}
-            {/*</Popover>*/}
             <Alert status={errorsMessage ? errorsMessage : successMessage}
                    message={errorsMessage ? errorsMessage : successMessage}
                    relink={false} logout={false} icon={errorsMessage ? 'error' : 'success'}/>
@@ -190,7 +152,7 @@ const DashBoard = () => {
                         alignItems: 'center',
                         minHeight: 621,
                     }}
-                >
+                 component='div'>
                     <Fade >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
@@ -308,8 +270,6 @@ const DashBoard = () => {
                                         label="Пароль"
                                         type="password"
                                         id="password"
-                                        // value={password}
-                                        // onChange={handleChangePassword}
                                         autoComplete="new-password"
                                     />
                                 </Grid>
@@ -323,8 +283,6 @@ const DashBoard = () => {
                                         label="Повторите ввод пароля"
                                         type="password"
                                         id="password2"
-                                        // value={password2}
-                                        // onChange={handleChangePassword2}
                                         autoComplete="new-password2"
                                     />
                                 </Grid>

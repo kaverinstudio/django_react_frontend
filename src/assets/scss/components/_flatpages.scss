@@ -1,0 +1,16 @@
+.flatpage{
+  &__image-card{
+    width: 100%;
+    height: 500px; 
+  }
+  
+  &__title{
+    color: $blue;
+  }
+  &__image{
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+}
+

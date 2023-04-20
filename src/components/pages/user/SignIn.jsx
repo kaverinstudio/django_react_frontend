@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,8 +18,6 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../../api/user";
-import {Popover} from "@mui/material";
-import {userLogout} from "../../../redux/slices/authSlice";
 import Alert from "../../Alert";
 
 const schema = yup.object().shape({
@@ -54,41 +52,9 @@ const SignIn = ({onRegister}) => {
         reset()
     };
 
-    // const [anchorEl, setAnchorEl] = React.useState(null);
-    //
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    //     dispatch(userLogout(''))
-    // };
-    //
-    // useEffect(()=>{
-    //     if (loginErrors?.non_field_errors){
-    //         setAnchorEl('open')
-    //     }
-    // },[loginErrors])
-    //
-    //
-    // const open = Boolean(anchorEl);
-    // const id = open ? 'simple-popover' : undefined;
 
     return (
         <ThemeProvider theme={theme}>
-            {/*<Popover*/}
-            {/*    id={id}*/}
-            {/*    open={open}*/}
-            {/*    anchorEl={anchorEl}*/}
-            {/*    onClose={handleClose}*/}
-            {/*    anchorOrigin={{*/}
-            {/*        vertical: 'center',*/}
-            {/*        horizontal: 'center',*/}
-            {/*    }}*/}
-            {/*    transformOrigin={{*/}
-            {/*        vertical: 'center',*/}
-            {/*        horizontal: 'center',*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    <Typography sx={{ p: 2, textAlign: 'center', color: 'red' }}>{loginErrors?.non_field_errors}</Typography>*/}
-            {/*</Popover>*/}
             <Alert status={loginErrors?.non_field_errors} message={loginErrors?.non_field_errors} icon={'error'} relink={false} logout={true}/>
             <Container component="main" maxWidth="xs">
 
@@ -100,7 +66,7 @@ const SignIn = ({onRegister}) => {
                         alignItems: 'center',
                         minHeight: 621,
                     }}
-                >
+                 component='div'>
                     <Fade >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />

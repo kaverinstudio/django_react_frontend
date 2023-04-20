@@ -17,6 +17,7 @@ import { RotatingLines } from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoader } from "../../redux/slices/portfolioSlice";
 import { Link } from 'react-router-dom';
+import SwiperComponent from '../swiper/SwiperComponent';
 
 const MainPage = () => {
   const [blocks, setBlock] = useState([])
@@ -38,7 +39,7 @@ const MainPage = () => {
 
   if (loader) {
     return (
-      <Box sx={{ position: 'absolute', top: '50%', left: '50%' }}>
+      <Box sx={{ position: 'absolute', top: '50%', left: '50%' }} component='div'>
         <RotatingLines
           strokeColor="grey"
           strokeWidth="2"
@@ -51,10 +52,12 @@ const MainPage = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1, marginTop: 2, marginBottom: 2 }}>
+    <Box sx={{ flexGrow: 1, marginTop: 2, marginBottom: 2 }} component='div'>
+      <Box sx={{ mb: 2 }} component='div'>
+        <SwiperComponent />
+      </Box>
       <Grid container spacing={2}>
         {blocks.map(block =>
-
           <Grid key={block.id} item sm={6} md={4} xs={12}>
             <Fade>
               <Card>

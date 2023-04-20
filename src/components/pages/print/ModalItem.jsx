@@ -82,7 +82,7 @@ const ModalItem = ({active, setActive, item, files}) => {
                 }}
             >
                 <Fade in={active}>
-                    <Box sx={style} component='form' onSubmit={handleSubmit}>
+                    <Box sx={style} component='form' onSubmit={handleSubmit} className='modal__form'>
                         <Typography id="transition-modal-title" variant="h6" component="h2">
                             Параметры печати фотографии
                         </Typography>

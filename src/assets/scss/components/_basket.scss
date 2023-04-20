@@ -49,6 +49,7 @@
   background-color: $gray-line;
   padding: 2rem;
   height: 100%;
+  flex-direction: column !important;
   &__image-wrapper{
     width: 150px;
   }
