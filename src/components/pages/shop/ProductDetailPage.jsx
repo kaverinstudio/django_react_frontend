@@ -3,13 +3,18 @@ import { useParams } from "react-router-dom";
 import { addProductToCart } from "../../../api/products";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    Avatar,
     Box,
     Button,
     CardMedia,
     Divider,
     Grid,
     ImageList,
-    ImageListItem,
+    ImageListItem, Link,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
     Rating,
     TextField,
     Typography
@@ -19,14 +24,42 @@ import { API_URL } from "../../../api/config";
 import { RotatingLines } from "react-loader-spinner";
 import CurrencyRubleIcon from "@mui/icons-material/CurrencyRuble";
 import BreadcrumbsComponent from '../../BreadcrumbsComponent';
+import { formatDate } from "../../../utils/formatDate";
+import { previewText } from "../../../utils/previewText";
+import ModalReview from "./ModalReview";
+import ModalSendReview from "./ModalSendReview";
+import Alert from "../../Alert";
 
 const ProductDetailPage = () => {
+    const status = useSelector(state => state.files.errors)
     const [product, setProduct] = useState(null)
     const [mainPhoto, setMainPhoto] = useState(null)
     const [count, setCount] = useState(1)
     const user = useSelector(state => state.auth.user)
     const params = useParams()
     const dispatch = useDispatch()
+
+    const [openReview, setOpenReview] = useState(false);
+    const [reviewItem, setReviewItem] = useState([]);
+
+    const handleClickOpenReview = (actualReview) => {
+        setOpenReview(true);
+        setReviewItem(actualReview);
+    };
+
+    const handleCloseReview = () => {
+        setOpenReview(false);
+    };
+
+    const [openSendReview, setOpenSendReview] = useState(false)
+
+    const handleClickOpenSendReview = () => {
+        setOpenSendReview(true);
+    };
+
+    const handleCloseSendReview = () => {
+        setOpenSendReview(false);
+    };
 
     useEffect(() => {
         async function getProduct() {
@@ -38,6 +71,7 @@ const ProductDetailPage = () => {
                 console.log(e)
             }
         }
+
         getProduct();
     }, [])
 
@@ -52,6 +86,7 @@ const ProductDetailPage = () => {
     const addToCartHandler = (productId, user, count) => {
         dispatch(addProductToCart(productId, user, count))
     }
+
 
     if (!product) {
         return (
@@ -72,6 +107,7 @@ const ProductDetailPage = () => {
         { name: product.products.category.category_name, link: `/products/${params.category}/` },
         { name: product.products.product_name, link: `/products/${params.category}/${params.slug}/` },
     ]
+
 
     return (
         <>
@@ -99,7 +135,8 @@ const ProductDetailPage = () => {
                             }}
                         >
                             {product.photos.map(image =>
-                                <ImageListItem className='product-detail__image-list' key={image.id} sx={{ height: '100% !important' }}>
+                                <ImageListItem className='product-detail__image-list' key={image.id}
+                                    sx={{ height: '100% !important' }}>
                                     <img
                                         style={{ overflow: 'hidden' }}
                                         src={`${image.photo}?w=100&h=100&fit=crop&auto=format`}
@@ -117,7 +154,8 @@ const ProductDetailPage = () => {
                 </Grid>
                 <Grid item sm={6}>
                     <Box component='div'>
-                        <Typography className='product-detail__title' variant='h4'>{product.products.product_name}</Typography>
+                        <Typography className='product-detail__title'
+                            variant='h4'>{product.products.product_name}</Typography>
                     </Box>
                     <Grid container spacing={2} mt={0.5}>
                         <Grid item sm={4}>
@@ -127,12 +165,18 @@ const ProductDetailPage = () => {
                             <Typography variant='caption'>Просмотров {product.products.view_count}</Typography>
                         </Grid>
                         <Grid item sm={4}>
-                            <Typography variant='caption' sx={{ color: product.products.available ? 'green' : 'red' }} >{product.products.available ? 'В наличии' : 'Нет в наличии'}</Typography>
+                            <Typography variant='caption'
+                                sx={{ color: product.products.available ? 'green' : 'red' }}>{product.products.available ? 'В наличии' : 'Нет в наличии'}</Typography>
                         </Grid>
                     </Grid>
                     <Divider />
                     <Box sx={{ display: 'flex', alignItems: 'center' }} component='div'>
-                        <Typography variant='h6' sx={{ textAlign: 'center', pt: 2, pb: 2 }}>Цена: {parseInt(product.products.price).toLocaleString('ru-RU')} </Typography><CurrencyRubleIcon sx={{ fontSize: '1.1rem' }} />
+                        <Typography variant='h6' sx={{
+                            textAlign: 'center',
+                            pt: 2,
+                            pb: 2
+                        }}>Цена: {parseInt(product.products.price).toLocaleString('ru-RU')} </Typography><CurrencyRubleIcon
+                            sx={{ fontSize: '1.1rem' }} />
                     </Box>
                     <Box component='div'>
                         <Typography variant='body1'>{product.products.description}</Typography>
@@ -152,15 +196,73 @@ const ProductDetailPage = () => {
                             />
                         </Grid>
                         <Grid item sm={4}>
-                            <Button variant='contained' onClick={() => addToCartHandler(product.products.id, user, count)}
+                            <Button variant='contained'
+                                onClick={() => addToCartHandler(product.products.id, user, count)}
                                 sx={{ display: 'block', mt: 2 }}
                             >
                                 Купить
                             </Button>
                         </Grid>
                     </Grid>
+                    <Box component='div' sx={{ mt: 2 }}>
+                        <Divider />
+                        <Box component='div' sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                            <Box component='div'>
+                                <Typography className='product-detail__title' variant='h6'>Отзывы:</Typography>
+                            </Box>
+                            <Box component='div'>
+                                <Button
+                                    variant={"outlined"}
+                                    color={"success"}
+                                    size={"small"}
+                                    onClick={handleClickOpenSendReview}
+                                >Оставить отзыв</Button>
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box component='div'>
+                        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                            {product.reviews.map((review) => {
+
+                                return (
+                                    <ListItem key={review.id} alignItems="flex-start">
+                                        <ListItemAvatar>
+                                            <Avatar alt={review.user_name} src={review.user_avatar ? review.user_avatar : review.user_name} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={review.user_name}
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        sx={{ display: 'inline' }}
+                                                        component='span'
+                                                        variant='body2'
+                                                        color='text.primary'
+                                                    >
+                                                        {formatDate(review.date)}
+                                                    </Typography>
+                                                    {' - ' + previewText(review.review_text)}
+                                                    {review.review_text.length > 140 && <Link onClick={() => handleClickOpenReview(review)} sx={{ cursor: 'pointer' }}>далее</Link>}
+
+                                                </React.Fragment>
+                                            }
+                                        />
+                                        <ModalReview
+                                            open={openReview}
+                                            close={handleCloseReview}
+                                            review={reviewItem}
+                                            onClose={handleCloseReview}
+                                        />
+                                    </ListItem>
+                                )
+                            }
+                            )}
+                        </List>
+                    </Box>
                 </Grid>
             </Grid>
+            <ModalSendReview open={openSendReview} close={handleCloseSendReview} product={product.products} />
+            <Alert link="" status={status} message={`Ваш отзыв отправлен на модерацию`} icon={'success'} relink={false} logout={false} />
         </>
     );
 };

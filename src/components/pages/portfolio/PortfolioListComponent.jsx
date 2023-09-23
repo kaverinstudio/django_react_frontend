@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {getAllPortfolioFiles} from "../../../api/portfolio";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useCallback, useEffect, useState } from 'react';
+import { getAllPortfolioFiles } from "../../../api/portfolio";
+import { useDispatch, useSelector } from "react-redux";
 import Gallery from "react-photo-gallery";
-import Carousel, {Modal, ModalGateway} from "react-images";
-import {Box} from "@mui/material";
-import {RotatingLines} from "react-loader-spinner";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import { Box } from "@mui/material";
+import { RotatingLines } from "react-loader-spinner";
 import Fade from 'react-reveal/Fade';
 
 const PortfolioListComponent = () => {
+    const thumbs = useSelector(state => state.portfolio.files)
     const photos = useSelector(state => state.portfolio.files)
     const loader = useSelector(state => state.portfolio.isVisible)
     const dispatch = useDispatch()
@@ -19,7 +20,7 @@ const PortfolioListComponent = () => {
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
-    const openLightbox = useCallback((event, {index}) => {
+    const openLightbox = useCallback((event, { index }) => {
         setCurrentImage(index);
         setViewerIsOpen(true);
     }, []);
@@ -31,7 +32,7 @@ const PortfolioListComponent = () => {
 
     if (loader) {
         return (
-            <Box sx={{position: 'absolute', top: '50%', left: '50%'}} component='div'>
+            <Box sx={{ position: 'absolute', top: '50%', left: '50%' }} component='div'>
                 <RotatingLines
                     strokeColor="grey"
                     strokeWidth="2"
@@ -46,7 +47,7 @@ const PortfolioListComponent = () => {
     return (
         <div>
             <Fade>
-                <Gallery photos={JSON.parse(JSON.stringify(photos))} onClick={openLightbox}/>
+                <Gallery photos={JSON.parse(JSON.stringify(thumbs))} onClick={openLightbox} />
             </Fade>
             <ModalGateway>
                 {viewerIsOpen ? (
@@ -55,7 +56,7 @@ const PortfolioListComponent = () => {
                             currentIndex={currentImage}
                             views={photos.map(x => ({
                                 ...x,
-                                srcSet: x.photo,
+                                source: x.photo,
                                 caption: x.title
                             }))}
                         />

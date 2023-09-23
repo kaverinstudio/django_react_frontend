@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from "swiper";
+import { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { API_URL } from '../../api/config';
@@ -27,9 +27,9 @@ function SwiperComponent() {
       pagination={{
         clickable: true,
       }}
-      modules={[Pagination]}
+      modules={[Pagination, Autoplay]}
       autoplay={{
-        delay: 2500,
+        delay: 5000,
         disableOnInteraction: true,
       }}
       loop={true}

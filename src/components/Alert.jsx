@@ -66,7 +66,7 @@ const Alert = ({status, message, icon, relink, logout, link}) => {
             icon: icon,
             width: 800,
             imageUrl: '',
-            title: <Typography sx={style.title} component="h4" variant="h4">{message}</Typography>,
+            title: <Typography sx={style.title}>{message}</Typography>,
             confirmButtonColor: '#1e78fe',
 
         }).then((result) => {

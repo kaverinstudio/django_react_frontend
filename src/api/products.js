@@ -208,3 +208,32 @@ export const shopConfirmOrder = (
     }
   };
 };
+
+export const sendReview = (user, user_name, review_text, product, rating) => {
+    return async dispatch => {
+      try {
+        let config = {
+          headers: {Authorization: `Token ${localStorage.getItem("token")}`},
+        };
+        if (!user) {
+          config = {
+            headers: {"X-CSRFToken": localStorage.getItem("session_key")},
+          };
+        }
+        const response = await axios.post(`${API_URL}api/reviews/`, {
+              user,
+              user_name,
+              review_text,
+              product,
+              rating
+            },
+            config
+        );
+        if (response.status === 200){
+          dispatch(errorFileMessages("ok"));
+        }
+      }catch (e) {
+        dispatch(errorMessages(e.response.data));
+      }
+    }
+}

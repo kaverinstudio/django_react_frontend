@@ -18,24 +18,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { showLoader } from "../../redux/slices/portfolioSlice";
 import { Link } from 'react-router-dom';
 import SwiperComponent from '../swiper/SwiperComponent';
+import { API_URL } from '../../api/config';
 
 const MainPage = () => {
   const [blocks, setBlock] = useState([])
   const loader = useSelector(state => state.portfolio.isVisible)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    getBlocks()
-  }, [])
-
   const getBlocks = async () => {
     dispatch(showLoader(true))
-    const response = await fetch('/api/main/')
+    const response = await fetch(`${API_URL}api/main/`)
     await response.json().then((data) => {
+      console.log(data)
       setBlock(data)
       dispatch(showLoader(false))
     })
   }
+
+  useEffect(() => {
+    getBlocks()
+  }, [])
 
   if (loader) {
     return (
@@ -61,22 +63,24 @@ const MainPage = () => {
           <Grid key={block.id} item sm={6} md={4} xs={12}>
             <Fade>
               <Card>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="250"
-                    image={block.image}
-                    alt={block.name}
-                  />
-                  <CardContent sx={{ minHeight: 135 }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {block.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {block.description}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                <Link to={block.slug}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="250"
+                      image={block.image}
+                      alt={block.name}
+                    />
+                    <CardContent sx={{ minHeight: 135 }}>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {block.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {block.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
                 <CardActions>
                   <Link to={block.slug}>
                     <Button size="small" color="primary">
@@ -87,10 +91,8 @@ const MainPage = () => {
               </Card>
             </Fade>
           </Grid>
-
         )
         }
-
       </Grid>
     </Box>
 
