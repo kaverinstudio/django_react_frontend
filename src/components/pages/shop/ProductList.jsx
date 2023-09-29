@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Box, Grid} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import {Alert, Box, Grid, Snackbar} from "@mui/material";
 import {useSelector} from "react-redux";
 import ProductCard from "./ProductCard";
 import {RotatingLines} from "react-loader-spinner";
@@ -7,6 +7,7 @@ import {RotatingLines} from "react-loader-spinner";
 const ProductList = () => {
     let products = useSelector(state => state.products.products)
     const photos = useSelector(state => state.products.photos)
+
 
     if (!products){
         return (
@@ -25,6 +26,7 @@ const ProductList = () => {
 
 
     return (
+        <>
         <Box gap={1} sx={{display:'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr)) !important', mb: 2}}>
             {products?.map(product =>
                 <Box key={product.id} sx={{height: 500}}>
@@ -33,6 +35,8 @@ const ProductList = () => {
 
             )}
         </Box>
+
+        </>
     );
 };
 

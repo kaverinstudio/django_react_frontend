@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import './assets/scss/app.scss';
 import Header from "./components/Header";
 import MainPage from "./components/pages/MainPage";
 import Footer from "./components/Footer";
 import User from "./components/pages/user/User";
-import { Box, Container } from "@mui/material";
+import {Alert, Box, Container, Snackbar} from "@mui/material";
 import { auth } from "./api/user";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import LoadPhotoPage from "./components/pages/print/LoadPhotoPage";
 import ConfirmOrderPage from "./components/pages/print/ConfirmOrderPage";
 import { Helmet } from "react-helmet";
@@ -21,6 +21,21 @@ import ContactPage from "./components/pages/ContactPage";
 
 function App() {
   const dispatch = useDispatch()
+  const snackBar = useSelector(state => state.products.snackBar)
+
+  const [snackOpen, setSnackOpen] = useState(false)
+
+  useEffect(()=>{
+    setSnackOpen(snackBar)
+  },[snackBar])
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
 
   useEffect(() => {
     dispatch(auth())
@@ -49,6 +64,11 @@ function App() {
           <Route path="/cart/confirm/" element={<ConfirmShopOrderPage />} />
           <Route path="*" element={<MainPage />} />
         </Routes>
+        <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={snackOpen} autoHideDuration={6000} onClose={handleClose}>
+          <Alert elevation={6} everity="success" sx={{ width: '100%' }} onClose={handleClose}>
+            Товар добавлен в корзину
+          </Alert>
+        </Snackbar>
       </Container>
       <Footer />
     </Box>

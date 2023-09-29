@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {useDispatch, useSelector} from "react-redux";
-import {Checkbox, FormControlLabel, FormLabel, ImageListItem, RadioGroup, TextField} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Checkbox, FormControlLabel, FormLabel, ImageListItem, RadioGroup, TextField } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {fileUpdate} from "../../../api/file";
+import { fileUpdate } from "../../../api/file";
 import Radio from '@mui/material/Radio';
 
 const style = {
@@ -27,7 +27,7 @@ const style = {
 };
 
 
-const ModalItem = ({active, setActive, item, files}) => {
+const ModalItem = ({ active, setActive, item, files }) => {
     const dispatch = useDispatch()
     const fileInitialProps = useSelector(state => state.files.fileInitialProps)
 
@@ -45,9 +45,9 @@ const ModalItem = ({active, setActive, item, files}) => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        if (event.target.all.checked){
+        if (event.target.all.checked) {
             files.map(file => dispatch(fileUpdate(event.target.format.value, event.target.papier.value, event.target.count.value, file.id, null)))
-        }else {
+        } else {
             dispatch(fileUpdate(event.target.format.value, event.target.papier.value, event.target.count.value, item.id, null))
         }
 
@@ -87,18 +87,18 @@ const ModalItem = ({active, setActive, item, files}) => {
                             Параметры печати фотографии
                         </Typography>
                         <Box height={280}>
-                            <ImageListItem sx={{height: '100% !important'}}>
-                        <img
-                            style={{overflow: 'hidden'}}
-                            src={`${item?.file}?w=248&h=248&fit=crop&auto=format`}
-                            srcSet={`${item?.file}?w=248&h=248&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item?.format}
-                            loading='lazy'
-                            decoding='async'
-                        />
+                            <ImageListItem sx={{ height: '100% !important' }}>
+                                <img
+                                    style={{ overflow: 'hidden' }}
+                                    src={`${item?.thumb}?w=248&h=248&fit=crop&auto=format`}
+                                    srcSet={`${item?.thumb}?w=248&h=248&fit=crop&auto=format&dpr=2 2x`}
+                                    alt={item?.format}
+                                    loading='lazy'
+                                    decoding='async'
+                                />
                             </ImageListItem>
                         </Box>
-                        <Box sx={{mt: 2, mb: 2, display: 'flex', justifyContent: 'space-between'}}>
+                        <Box sx={{ mt: 2, mb: 2, display: 'flex', justifyContent: 'space-between' }}>
                             <FormControl sx={{ width: '45%' }} size="small">
                                 <InputLabel id="demo-select-small">Формат</InputLabel>
                                 <Select
@@ -142,16 +142,16 @@ const ModalItem = ({active, setActive, item, files}) => {
                                 >
                                     {
                                         fileInitialProps?.papierType.map(type =>
-                                            <FormControlLabel key={type.id} value={type.papier_type} control={<Radio sx={{color: 'blue'}} />} label={type.papier_type} />
+                                            <FormControlLabel key={type.id} value={type.papier_type} control={<Radio sx={{ color: 'blue' }} />} label={type.papier_type} />
 
                                         )
                                     }
 
                                 </RadioGroup>
                             </FormControl>
-                            <FormControlLabel control={<Checkbox name='all'/>} label="Применить ко всем фотографиям" />
+                            <FormControlLabel control={<Checkbox name='all' />} label="Применить ко всем фотографиям" />
                         </Box>
-                        <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2}}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
 
                             <Button type='submit' variant="contained" color="success">
                                 Сохранить

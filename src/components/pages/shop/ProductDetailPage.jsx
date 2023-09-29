@@ -108,7 +108,7 @@ const ProductDetailPage = () => {
         { name: product.products.product_name, link: `/products/${params.category}/${params.slug}/` },
     ]
 
-
+    console.log(product)
     return (
         <>
             <Box sx={{ flexGrow: 1, mt: 2, mb: 2 }} component='div'>
@@ -223,8 +223,8 @@ const ProductDetailPage = () => {
                     <Box component='div'>
                         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                             {product.reviews.map((review) => {
-
                                 return (
+                                    <>
                                     <ListItem key={review.id} alignItems="flex-start">
                                         <ListItemAvatar>
                                             <Avatar alt={review.user_name} src={review.user_avatar ? review.user_avatar : review.user_name} />
@@ -247,13 +247,17 @@ const ProductDetailPage = () => {
                                                 </React.Fragment>
                                             }
                                         />
+
                                         <ModalReview
                                             open={openReview}
                                             close={handleCloseReview}
                                             review={reviewItem}
                                             onClose={handleCloseReview}
                                         />
+
                                     </ListItem>
+                                    <Divider variant="inset" component="li"/>
+                                    </>
                                 )
                             }
                             )}

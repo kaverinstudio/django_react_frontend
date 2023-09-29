@@ -68,8 +68,8 @@ const Header = () => {
   }, [cart])
 
   useEffect(() => {
-    dispatch(getUserCart())
-  }, [])
+    dispatch(getUserCart(user))
+  }, [user])
 
   return (
     <AppBar className='header' position="static" sx={{ color: 'initial' }}>

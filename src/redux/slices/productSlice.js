@@ -9,7 +9,8 @@ const initialState = {
     errors: null,
     cart: null,
     filterManufactured: null,
-    filterCategory: null
+    filterCategory: null,
+    snackBar: false
 }
 
 export const productSlice = createSlice({
@@ -40,10 +41,13 @@ export const productSlice = createSlice({
         },
         filterCategory: (state, action) => {
             state.filterCategory = action.payload
+        },
+        setSnackBar: (state, action) => {
+            state.snackBar = action.payload
         }
     }
 })
 
-export const { showUploader, errorProductMessages, loadProducts, loadPhotos, getCart, loadInitialProducts, filterManufactured, filterCategory } = productSlice.actions
+export const { showUploader, errorProductMessages, loadProducts, loadPhotos, getCart, loadInitialProducts, filterManufactured, filterCategory, setSnackBar } = productSlice.actions
 
 export default productSlice.reducer

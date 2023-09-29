@@ -33,6 +33,8 @@ function SwiperComponent() {
         disableOnInteraction: true,
       }}
       loop={true}
+      speed={1500}
+      effect='fade'
     >
       {slides && slides.map(slide =>
         <SwiperSlide key={slide.id}>
